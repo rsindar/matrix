@@ -25,7 +25,7 @@
     state: present
 
 - name: Grant read access to /var/lib/caddy/.local and subdirectories
-  ansible.builtin.ansible.posix.acl:
+  ansible.posix.acl:
     path: /var/lib/caddy/.local
     default: true
     recursive: true
@@ -35,7 +35,7 @@
     state: present
 
 - name: Grant read access to Caddy certificate
-  ansible.builtin.ansible.posix.acl:
+  ansible.posix.acl:
     path: /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ tuwunel_fqdn }}/{{ tuwunel_fqdn }}.{{ item }}
     entity: coturn
     etype: user
