@@ -1,0 +1,34 @@
+{{ ansible_managed | comment }}
+[global]
+server_name = "{{ tuwunel_fqdn }}"
+
+database_path = "/var/lib/tuwunel"
+
+address = ["127.0.0.1"]
+port = 8008
+
+allow_encryption = true
+
+allow_registration = true
+registration_token = "{{ tuwunel_reg_token }}"
+new_user_displayname_suffix = ""
+
+allow_federation = false
+
+allow_public_room_directory_over_federation = false
+
+allow_public_room_directory_without_auth = false
+
+turn_allow_guests = false
+
+allow_unstable_room_versions = false
+allow_experimental_room_versions = false
+
+log = "info"
+
+turn_secret = "{{ turn_secret }}"
+turn_uris = ["turn:{{ tuwunel_fqdn }}?transport=udp","turn:{{ tuwunel_fqdn }}?transport=tcp"]
+
+[global.well_known]
+client = "https://{{ tuwunel_fqdn }}"
+server = "{{ tuwunel_fqdn }}:443"

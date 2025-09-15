@@ -1,0 +1,13 @@
+---
+- name: Install Matrix homeserver
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    tuwunel_fqdn: "matrix.example.com"
+    tuwunel_reg_token: "CHANGE_ME_j9yNvB9oYJU7qop3"
+    turn_secret: "CHANGE_ME_BlFQj9Tw1uMzFo3AuiCsNZ8UufOySeu892zHia9Ti4vgYMxQIOQFVWgoKtmZuP2O"
+  roles:
+    - tuwunel
+    - caddy
+    - coturn

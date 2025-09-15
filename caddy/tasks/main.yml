@@ -1,0 +1,20 @@
+---
+- name: Install Caddy
+  ansible.builtin.yum:
+    name: caddy
+    state: present
+
+- name: Copy Caddy configuration
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+    mode: "0640"
+    owner: root
+    group: root
+  notify: Restart coturn
+
+- name: Start Caddy service
+  ansible.builtin.systemd:
+    name: caddy.service
+    state: started
+    enabled: true

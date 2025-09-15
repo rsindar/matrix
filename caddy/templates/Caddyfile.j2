@@ -1,0 +1,9 @@
+{{ ansible_managed | comment }}
+{{ tuwunel_fqdn }}, {{ tuwunel_fqdn }}:8448 {
+  reverse_proxy localhost:8008
+  header /.well-known/matrix/* Content-Type application/json
+  header /.well-known/matrix/* Access-Control-Allow-Origin *
+  respond /.well-known/matrix/server `{"m.server": "{{ tuwunel_fqdn }}:443"}`
+  respond /.well-known/matrix/client `{"m.homeserver":{"base_url":"https://{{ tuwunel_fqdn }}"}}`
+  respond /robots.txt "User-agent: *\n Disallow: /" 200
+}

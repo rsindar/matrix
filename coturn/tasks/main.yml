@@ -1,0 +1,46 @@
+---
+- name: Install Coturn
+  ansible.builtin.yum:
+    name: coturn
+    state: present
+
+- name: Copy Coturn configuration
+  ansible.builtin.template:
+    src: turnserver.conf.j2
+    dest: /etc/coturn/turnserver.conf
+    mode: "0640"
+    owner: root
+    group: coturn
+  notify: Restart coturn
+
+- name: Start Coturn service
+  ansible.builtin.systemd:
+    name: coturn.service
+    state: started
+    enabled: true
+
+- name: Install acl
+  ansible.builtin.yum:
+    name: acl
+    state: present
+
+- name: Grant read access to /var/lib/caddy/.local and subdirectories
+  ansible.builtin.ansible.posix.acl:
+    path: /var/lib/caddy/.local
+    default: true
+    recursive: true
+    entity: coturn
+    etype: user
+    permissions: rx
+    state: present
+
+- name: Grant read access to Caddy certificate
+  ansible.builtin.ansible.posix.acl:
+    path: /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ tuwunel_fqdn }}/{{ tuwunel_fqdn }}.{{ item }}
+    entity: coturn
+    etype: user
+    permissions: r
+    state: present
+  loop:
+    - crt
+    - key

@@ -1,0 +1,9 @@
+---
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart tuwunel
+  ansible.builtin.systemd:
+    name: tuwunel.service
+    state: restarted

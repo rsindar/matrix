@@ -1,0 +1,58 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=Tuwunel Matrix homeserver
+Wants=network-online.target
+After=network-online.target
+Documentation=https://tuwunel.chat/
+
+[Service]
+DynamicUser=yes
+User=tuwunel
+Group=tuwunel
+Type=notify
+
+Environment="TUWUNEL_CONFIG=/etc/tuwunel/tuwunel.toml"
+
+ExecStart=/usr/sbin/tuwunel
+
+ReadWritePaths=/var/lib/tuwunel /etc/tuwunel
+
+AmbientCapabilities=
+CapabilityBoundingSet=
+
+DevicePolicy=closed
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+NoNewPrivileges=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectSystem=strict
+PrivateDevices=yes
+PrivateMounts=yes
+PrivateTmp=yes
+PrivateUsers=yes
+RemoveIPC=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+SystemCallArchitectures=native
+SystemCallFilter=~@clock @debug @module @mount @reboot @swap @cpu-emulation @obsolete @timer @chown @setuid @privileged @keyring @ipc
+SystemCallErrorNumber=EPERM
+
+RuntimeDirectory=tuwunel
+RuntimeDirectoryMode=0750
+
+Restart=on-failure
+RestartSec=5
+
+TimeoutStopSec=2m
+TimeoutStartSec=2m
+
+StartLimitInterval=1m
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
