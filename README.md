@@ -22,3 +22,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 
 ## Usage
 ansible-playbook -i matrix_server, site.yml
+
+## Matrix clients
+- [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
+- [Element Classic](https://play.google.com/store/search?q=element+classic&c=apps)
