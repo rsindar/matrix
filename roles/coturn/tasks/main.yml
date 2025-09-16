@@ -36,7 +36,7 @@
 
 - name: Grant read access to Caddy certificate
   ansible.posix.acl:
-    path: /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ tuwunel_fqdn }}/{{ tuwunel_fqdn }}.{{ item }}
+    path: /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ matrix_fqdn }}/{{ matrix_fqdn }}.{{ item }}
     entity: coturn
     etype: user
     permissions: r
