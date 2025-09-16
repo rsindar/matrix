@@ -10,7 +10,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 
 ## Requirements
 - Ansible ≥ 2.12
-- A fresh Linux server (Red Hat family)
+- A fresh Linux server (RHEL/AlmaLinux/Rocky/Debian/Ubuntu)
 - SSH access with sudo privileges
 - DNS records pointing to your server
 - The following network ports must be open:
