@@ -1,6 +1,6 @@
 # Matrix Homeserver Ansible Playbook
 
-This repository contains an Ansible playbook for deploying a **Matrix homeserver** based on [tuwunel](https://github.com/matrix-construct/tuwunel), [Coturn](https://github.com/coturn/coturn), and [Caddy](https://caddyserver.com/).  
+This repository contains an Ansible playbook for deploying a **Matrix homeserver** based on [Tuwunel](https://github.com/matrix-construct/tuwunel), [Coturn](https://github.com/coturn/coturn), and [Caddy](https://caddyserver.com/).  
 
 ## Features
 - Deploys **Tuwunel** (Matrix homeserver)
