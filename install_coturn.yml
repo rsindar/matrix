@@ -16,7 +16,15 @@
 
     - name: Populate OS family
       ansible.builtin.setup:
-        gather_subset: os_family
+        gather_subset:
+          - default_ipv4
+          - os_family
+
+    - name: Get external IP
+      ansible.builtin.uri:
+        url: "https://api.ipify.org"
+        return_content: true
+      register: external_ip
 
     - name: Install and configure Coturn
       ansible.builtin.import_role:

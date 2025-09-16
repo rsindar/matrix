@@ -2,6 +2,9 @@
 listening-ip 0.0.0.0
 listening-port=3478
 tls-listening-port=5349
+{% if external_ip['content'] != ansible_default_ipv4['address'] %}
+external-ip={{ external_ip['content'] }}/{{ ansible_default_ipv4['address'] }}"
+{% endif %}
 fingerprint
 use-auth-secret
 static-auth-secret={{ turn_secret }}
