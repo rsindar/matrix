@@ -9,7 +9,7 @@
         msg: "Please define matrix_fqdn variable"
       when: matrix_fqdn is undefined
 
-    - name: Generate turn authentication secret
+    - name: Generate Coturn authentication secret
       ansible.builtin.set_fact:
         turn_secret: "{{ lookup('ansible.builtin.password', '/dev/null', length=64, chars=['ascii_letters', 'digits']) }}"
         cacheable: true
