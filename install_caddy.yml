@@ -1,0 +1,17 @@
+---
+- name: Install Caddy
+  hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Check if matrix_fqdn is set
+      ansible.builtin.fail:
+        msg: "Please define matrix_fqdn variable"
+
+    - name: Populate OS family
+      ansible.builtin.setup:
+        gather_subset: os_family
+
+    - name: Install and configure Caddy
+      ansible.builtin.import_role:
+        name: caddy

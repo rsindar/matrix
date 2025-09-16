@@ -5,9 +5,9 @@ tls-listening-port=5349
 fingerprint
 use-auth-secret
 static-auth-secret={{ turn_secret }}
-realm={{ tuwunel_fqdn }}
+realm={{ matrix_fqdn }}
 lt-cred-mech
-cert=/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ tuwunel_fqdn }}/{{ tuwunel_fqdn }}.crt
-pkey=/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ tuwunel_fqdn }}/{{ tuwunel_fqdn }}.key
+cert=/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ matrix_fqdn }}/{{ matrix_fqdn }}.crt
+pkey=/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ matrix_fqdn }}/{{ matrix_fqdn }}.key
 no-multicast-peers
 no-cli

@@ -1,0 +1,21 @@
+---
+- name: Install Coturn
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Check if matrix_fqdn is set
+      ansible.builtin.fail:
+        msg: "Please define matrix_fqdn variable"
+
+    - name: Generate turn authentication secret
+      ansible.builtin.set_fact:
+        turn_secret: "{{ lookup('ansible.builtin.password', '/dev/null', length=64, chars=['ascii_letters', 'digits']) }}"
+
+    - name: Populate OS family
+      ansible.builtin.setup:
+        gather_subset: os_family
+
+    - name: Install and configure Coturn
+      ansible.builtin.import_role:
+        name: coturn

@@ -1,0 +1,21 @@
+---
+- name: Install Tuwunel
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Check if matrix_fqdn is set
+      ansible.builtin.fail:
+        msg: "Please define matrix_fqdn variable"
+
+    - name: Generate tuwunel registration token
+      ansible.builtin.set_fact:
+        tuwunel_reg_token: "{{ lookup('ansible.builtin.password', '/dev/null', length=16) }}"
+
+    - name: Populate OS family
+      ansible.builtin.setup:
+        gather_subset: os_family
+
+    - name: Install and configure Tuwunel
+      ansible.builtin.import_role:
+        name: tuwunel

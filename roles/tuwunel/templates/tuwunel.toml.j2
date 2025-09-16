@@ -1,6 +1,6 @@
 {{ ansible_managed | comment }}
 [global]
-server_name = "{{ tuwunel_fqdn }}"
+server_name = "{{ matrix_fqdn }}"
 
 database_path = "/var/lib/tuwunel"
 
@@ -13,7 +13,7 @@ allow_registration = true
 registration_token = "{{ tuwunel_reg_token }}"
 new_user_displayname_suffix = ""
 
-allow_federation = false
+allow_federation = true
 
 allow_public_room_directory_over_federation = false
 
@@ -27,8 +27,8 @@ allow_experimental_room_versions = false
 log = "info"
 
 turn_secret = "{{ turn_secret }}"
-turn_uris = ["turn:{{ tuwunel_fqdn }}?transport=udp","turn:{{ tuwunel_fqdn }}?transport=tcp"]
+turn_uris = ["turn:{{ matrix_fqdn }}?transport=udp","turn:{{ matrix_fqdn }}?transport=tcp"]
 
 [global.well_known]
-client = "https://{{ tuwunel_fqdn }}"
-server = "{{ tuwunel_fqdn }}:443"
+client = "https://{{ matrix_fqdn }}"
+server = "{{ matrix_fqdn }}:443"
