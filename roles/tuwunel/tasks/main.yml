@@ -1,8 +1,16 @@
 ---
-- name: Install Tuwunel
+- name: Install Tuwunel (RHEL/AlmaLinux/Rocky)
   ansible.builtin.yum:
-    name: "{{ tuwunel_package }}"
+    name: "{{ tuwunel_rpm_package }}"
     state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Install Tuwunel (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name: "{{ tuwunel_deb_package }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == "Debian"
 
 - name: Copy Tuwunel systemd unit
   ansible.builtin.template:

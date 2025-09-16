@@ -1,8 +1,16 @@
 ---
-- name: Install Caddy
+- name: Install Caddy (RHEL/AlmaLinux/Rocky)
   ansible.builtin.yum:
     name: caddy
     state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Install Caddy (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name: caddy
+    state: present
+    update_cache: true
+  when: ansible_os_family == "Debian"
 
 - name: Copy Caddy configuration
   ansible.builtin.template:

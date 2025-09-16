@@ -1,2 +1,3 @@
 ---
-tuwunel_package: "https://github.com/matrix-construct/tuwunel/releases/download/v1.4.2/v1.4.2-release-all-x86_64-v1-linux-gnu-tuwunel.rpm"
+tuwunel_rpm_package: "https://github.com/matrix-construct/tuwunel/releases/download/v1.4.2/v1.4.2-release-all-x86_64-v1-linux-gnu-tuwunel.rpm"
+tuwunel_deb_package: "https://github.com/matrix-construct/tuwunel/releases/download/v1.4.2/v1.4.2-release-all-x86_64-v1-linux-gnu-tuwunel.deb"

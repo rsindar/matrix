@@ -1,8 +1,20 @@
 ---
-- name: Install Coturn
+- name: Install required packages (RHEL/AlmaLinux/Rocky)
   ansible.builtin.yum:
-    name: coturn
+    name:
+      - coturn
+      - acl
     state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Install required packages (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name:
+      - coturn
+      - acl
+    state: present
+    update_cache: true
+  when: ansible_os_family == "Debian"
 
 - name: Copy Coturn configuration
   ansible.builtin.template:
@@ -18,11 +30,6 @@
     name: coturn.service
     state: started
     enabled: true
-
-- name: Install acl
-  ansible.builtin.yum:
-    name: acl
-    state: present
 
 - name: Grant read access to /var/lib/caddy/.local and subdirectories
   ansible.posix.acl:
