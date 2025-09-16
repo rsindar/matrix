@@ -6,7 +6,6 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 - Deploys **Tuwunel** (Matrix homeserver)
 - Installs and configures **Coturn** for VoIP/RTC traffic
 - Sets up **Caddy** as a reverse proxy with HTTPS (Let’s Encrypt)
-- Configurable via group vars and inventory
 
 ## Requirements
 - Ansible ≥ 2.12
