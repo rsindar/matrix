@@ -37,3 +37,7 @@
     name: tuwunel.service
     state: started
     enabled: true
+
+- name: Show Tuwunel registration token
+  ansible.builtin.debug:
+    msg: "Matrix registration token: '{{ tuwunel_reg_token }}'. NB! The first registered user will be granted admin permissions."
