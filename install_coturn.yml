@@ -14,7 +14,7 @@
         turn_secret: "{{ lookup('ansible.builtin.password', '/dev/null', length=64, chars=['ascii_letters', 'digits']) }}"
         cacheable: true
 
-    - name: Populate OS family
+    - name: Populate OS facts
       ansible.builtin.setup:
         gather_subset:
           - default_ipv4
