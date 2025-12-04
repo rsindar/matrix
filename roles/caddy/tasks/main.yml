@@ -6,19 +6,50 @@
   when: ansible_os_family == "RedHat"
 
 - name: Install Caddy (Debian/Ubuntu)
-  ansible.builtin.apt:
-    name: caddy
-    state: present
-    update_cache: true
   when: ansible_os_family == "Debian"
+  block:
+    - name: Install required packages
+      ansible.builtin.apt:
+        name:
+          - debian-keyring
+          - debian-archive-keyring
+          - apt-transport-https
+
+    - name: Check if Caddy GPG key is installed
+      ansible.builtin.stat:
+        path: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+      register: caddy_gpg_key
+
+    - name: Download Caddy GPG key
+      ansible.builtin.get_url:
+        url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
+        dest: /tmp/caddy.gpg.key
+        mode: "0644"
+      when: not caddy_gpg_key.stat,exists
+
+    - name: Convert GPG key to dearmored format
+      ansible.builtin.command: gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg /tmp/caddy.gpg.key
+      when: not caddy_gpg_key.stat.exists
+
+    - name: Download Caddy repository config
+      ansible.builtin.get_url:
+        url: "https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt"
+        dest: /etc/apt/sources.list.d/caddy-stable.list
+        mode: "0644"
+
+    - name: Install Caddy
+      ansible.builtin.apt:
+        name: caddy
+        state: present
+        update_cache: true
 
 - name: Copy Caddy configuration
   ansible.builtin.template:
     src: Caddyfile.j2
     dest: /etc/caddy/Caddyfile
     mode: "0640"
-    owner: root
-    group: root
+    owner: caddy
+    group: caddy
   notify: Restart caddy
 
 - name: Start Caddy service
