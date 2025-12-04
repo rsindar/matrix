@@ -13,6 +13,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 - SSH access with sudo privileges
 - DNS records pointing to your server
 - The following network ports must be open:
+    - 80/tcp
     - 443/tcp
     - 8448/tcp
     - 3478/tcp, 3478/udp
