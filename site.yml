@@ -1,9 +1,12 @@
 ---
 - name: Install Caddy
   ansible.builtin.import_playbook: install_caddy.yml
+  tags: caddy
 
 - name: Install Coturn
   ansible.builtin.import_playbook: install_coturn.yml
+  tags: coturn
 
 - name: Install Tuwunel
   ansible.builtin.import_playbook: install_tuwunel.yml
+  tags: tuwunel
