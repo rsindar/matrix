@@ -25,7 +25,7 @@
         url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
         dest: /tmp/caddy.gpg.key
         mode: "0644"
-      when: not caddy_gpg_key.stat,exists
+      when: not caddy_gpg_key.stat.exists
 
     - name: Convert GPG key to dearmored format
       ansible.builtin.command: gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg /tmp/caddy.gpg.key
