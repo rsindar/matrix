@@ -1,43 +1,6 @@
 ---
-- name: Install Tuwunel (RHEL/AlmaLinux/Rocky)
-  ansible.builtin.yum:
-    name: "{{ tuwunel_rpm_package }}"
-    state: present
-  when: ansible_os_family == "RedHat"
+- name: Install Tuwunel
+  ansible.builtin.import_tasks: install.yml
 
-- name: Install Tuwunel (Debian/Ubuntu)
-  ansible.builtin.apt:
-    name: "{{ tuwunel_deb_package }}"
-    state: present
-    update_cache: true
-  when: ansible_os_family == "Debian"
-
-- name: Copy Tuwunel systemd unit
-  ansible.builtin.template:
-    src: tuwunel.service.j2
-    dest: /etc/systemd/system/tuwunel.service
-    mode: "0644"
-    owner: root
-    group: root
-  notify:
-    - Reload systemd
-    - Restart tuwunel
-
-- name: Copy Tuwunel configuration
-  ansible.builtin.template:
-    src: tuwunel.toml.j2
-    dest: /etc/tuwunel/tuwunel.toml
-    mode: "0644"
-    owner: root
-    group: root
-  notify: Restart tuwunel
-
-- name: Start Tuwunel service
-  ansible.builtin.systemd:
-    name: tuwunel.service
-    state: started
-    enabled: true
-
-- name: Show Tuwunel registration token
-  ansible.builtin.debug:
-    msg: "Matrix registration token: '{{ tuwunel_reg_token }}'. NB! The first registered user will be granted admin permissions."
+- name: Configure Tuwunel
+  ansible.builtin.import_tasks: configure.yml

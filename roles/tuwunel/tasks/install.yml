@@ -1,0 +1,42 @@
+---
+- name: Install Tuwunel (RHEL/AlmaLinux/Rocky)
+  when: ansible_os_family == "RedHat"
+  block:
+    - name: Copy {{ tuwunel_rpm_package }}
+      ansible.builtin.copy:
+        src: "{{ tuwunel_rpm_package }}"
+        dest: /tmp/{{ tuwunel_rpm_package }}
+        mode: "0644"
+      when: tuwunel_local_install
+
+    - name: Install Tuwunel from local file
+      ansible.builtin.yum:
+        name: /tmp/{{ tuwunel_rpm_package }}
+        state: present
+      when: tuwunel_local_install
+
+    - name: Install Tuwunel from Internet
+      ansible.builtin.yum:
+        name: "{{ tuwunel_rpm_package }}"
+        state: present
+  
+- name: Install Tuwunel (Debian/Ubuntu)
+  when: ansible_os_family == "Debian"
+  block:
+    - name: Copy {{ tuwunel_deb_package }}
+      ansible.builtin.copy:
+        src: "{{ tuwunel_deb_package }}"
+        dest: /tmp/{{ tuwunel_deb_package }}
+        mode: "0644"
+      when: tuwunel_local_install
+
+    - name: Install Tuwunel from local file
+      ansible.builtin.apt:
+        name: /tmp/{{ tuwunel_deb_package }}
+        state: present
+      when: tuwunel_local_install
+
+    - name: Install Tuwunel from Internet
+      ansible.builtin.apt:
+        name: "{{ tuwunel_deb_package }}"
+        state: present

@@ -1,3 +1,4 @@
 ---
 tuwunel_rpm_package: "https://github.com/matrix-construct/tuwunel/releases/download/v1.4.7/v1.4.7-release-all-x86_64-v2-linux-gnu-tuwunel.rpm"
 tuwunel_deb_package: "https://github.com/matrix-construct/tuwunel/releases/download/v1.4.7/v1.4.7-release-all-x86_64-v2-linux-gnu-tuwunel.deb"
+tuwunel_local_install: false

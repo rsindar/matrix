@@ -1,0 +1,30 @@
+---
+- name: Copy Tuwunel systemd unit
+  ansible.builtin.template:
+    src: tuwunel.service.j2
+    dest: /etc/systemd/system/tuwunel.service
+    mode: "0644"
+    owner: root
+    group: root
+  notify:
+    - Reload systemd
+    - Restart tuwunel
+
+- name: Copy Tuwunel configuration
+  ansible.builtin.template:
+    src: tuwunel.toml.j2
+    dest: /etc/tuwunel/tuwunel.toml
+    mode: "0644"
+    owner: root
+    group: root
+  notify: Restart tuwunel
+
+- name: Start Tuwunel service
+  ansible.builtin.systemd:
+    name: tuwunel.service
+    state: started
+    enabled: true
+
+- name: Show Tuwunel registration token
+  ansible.builtin.debug:
+    msg: "Matrix registration token: '{{ tuwunel_reg_token }}'. NB! The first registered user will be granted admin permissions."
