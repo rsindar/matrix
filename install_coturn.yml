@@ -13,6 +13,7 @@
       ansible.builtin.set_fact:
         turn_secret: "{{ lookup('ansible.builtin.password', '/dev/null', length=64, chars=['ascii_letters', 'digits']) }}"
         cacheable: true
+      when: turn_secret is not defined
 
     - name: Populate OS facts
       ansible.builtin.setup:

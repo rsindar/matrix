@@ -13,6 +13,7 @@
       ansible.builtin.set_fact:
         tuwunel_reg_token: "{{ lookup('ansible.builtin.password', '/dev/null', length=16) }}"
         cacheable: true
+      when: tuwunel_reg_token is not defined
 
     - name: Populate OS family
       ansible.builtin.setup:
