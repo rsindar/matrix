@@ -34,9 +34,10 @@ all:
       turn_secret: SECRET2
 </pre>
 **NB! Never use not encrypted secrets in the inventory file.**
+<pre>
 ansible-vault encrypt_string 'SECRET1' --name 'tuwunel_reg_token'
 ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
-
+</pre>
 **Run:** ansible-playbook site.yml -i inventory.yml --ask-vault-pass
 
 ## Matrix clients
