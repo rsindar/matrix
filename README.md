@@ -21,7 +21,22 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
     - 49152-65535/udp
 
 ## Usage
-ansible-playbook -i matrix_server_address, site.yml -e "matrix_fqdn=matrix-server.tld"
+Create inventory.yml:
+---
+all:
+  hosts:
+    matrix_server:
+      ansible_host: 1.2.3.4
+      ansible_user: myuser
+      matrix_fqdn: my-matrix.tld
+      tuwunel_reg_token: SECRET1
+      turn_secret: SECRET2
+
+NB! Never use not encrypted secrets in the inventory file.
+ansible-vault encrypt_string 'SECRET1' --name 'tuwunel_reg_token'
+ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
+
+Run: ansible-playbook site.yml -i inventory.yml --ask-vault-pass
 
 ## Matrix clients
 - [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
