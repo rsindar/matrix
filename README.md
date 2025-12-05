@@ -22,7 +22,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 
 ## Usage
 <pre>
-Create inventory.yml:
+**Create inventory.yml:**
 ---
 all:
   hosts:
@@ -33,11 +33,11 @@ all:
       tuwunel_reg_token: SECRET1
       turn_secret: SECRET2
 
-NB! Never use not encrypted secrets in the inventory file.
+**NB! Never use not encrypted secrets in the inventory file.**
 ansible-vault encrypt_string 'SECRET1' --name 'tuwunel_reg_token'
 ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
 
-Run: ansible-playbook site.yml -i inventory.yml --ask-vault-pass
+**Run:** ansible-playbook site.yml -i inventory.yml --ask-vault-pass
 </pre>
 ## Matrix clients
 - [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
