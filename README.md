@@ -9,8 +9,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 
 ## Requirements
 - Ansible ≥ 2.12
-- Hardware: 1 CPU, 1GB RAM, 10GB SDD
-- A fresh Linux server (RHEL/AlmaLinux/Rocky/Debian/Ubuntu)
+- A fresh Linux server (1 CPU, 1GB RAM, 10GB SDD, RHEL/AlmaLinux/Rocky/Debian/Ubuntu)
 - SSH access with sudo privileges
 - DNS records pointing to your server
 - The following network ports must be open:
