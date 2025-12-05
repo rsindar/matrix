@@ -21,7 +21,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
     - 49152-65535/udp
 
 ## Usage
-<pre> ```
+<pre>
 Create inventory.yml:
 ---
 all:
@@ -38,7 +38,7 @@ ansible-vault encrypt_string 'SECRET1' --name 'tuwunel_reg_token'
 ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
 
 Run: ansible-playbook site.yml -i inventory.yml --ask-vault-pass
-``` </pre>
+</pre>
 ## Matrix clients
 - [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
 - [Element Classic](https://play.google.com/store/search?q=element+classic&c=apps)
