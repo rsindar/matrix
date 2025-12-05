@@ -1,3 +1,4 @@
 .vscode/
+*.deb
+*.rpm
 inventory.yml
-
