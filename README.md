@@ -21,7 +21,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
     - 49152-65535/udp
 
 ## Usage
-ansible-playbook -i matrix_server_address, site.yml -e "matrix_fqdn=matrix.example.com"
+ansible-playbook -i matrix_server_address, site.yml -e "matrix_fqdn=matrix-server.tld"
 
 ## Matrix clients
 - [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
