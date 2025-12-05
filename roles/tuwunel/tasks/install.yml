@@ -19,6 +19,7 @@
       ansible.builtin.yum:
         name: "{{ tuwunel_rpm_package }}"
         state: present
+      when: not tuwunel_local_install
   
 - name: Install Tuwunel (Debian/Ubuntu)
   when: ansible_os_family == "Debian"
@@ -32,11 +33,12 @@
 
     - name: Install Tuwunel from local file
       ansible.builtin.apt:
-        name: /tmp/{{ tuwunel_deb_package }}
+        deb: /tmp/{{ tuwunel_deb_package }}
         state: present
       when: tuwunel_local_install
 
     - name: Install Tuwunel from Internet
       ansible.builtin.apt:
-        name: "{{ tuwunel_deb_package }}"
+        deb: "{{ tuwunel_deb_package }}"
         state: present
+      when: not tuwunel_local_install
