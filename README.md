@@ -45,4 +45,4 @@ ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
 - [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
 - [Element Classic](https://play.google.com/store/search?q=element+classic&c=apps)
 
-P.S. Unfortunately, both SchildiChat and Element Classic cannot create users when token-based registration is used. You should create users in Element Web or via the CLI.
+P.S. Unfortunately, both SchildiChat and Element Classic cannot create users when token-based registration is used. You should create users in Element Web or in the Admin Room.
