@@ -5,7 +5,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 ## Features
 - Deploys **Tuwunel** (Matrix homeserver)
 - Installs and configures **Coturn** for VoIP/RTC traffic
-- Sets up **Caddy** as a reverse proxy with HTTPS (Let’s Encrypt)
+- Builds and sets up **Caddy** as a reverse proxy with HTTPS (Let’s Encrypt)
 
 ## Requirements
 - Ansible ≥ 2.12
@@ -45,7 +45,9 @@ ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
 - [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
 - [Element Classic](https://play.google.com/store/search?q=element+classic&c=apps)
 
-P.S. Unfortunately, both SchildiChat and Element Classic cannot create users when token-based registration is used. You should create users in Element Web or in the Admin Room.
+## Limitations
+- Element Calls are not supported (require Matrix RTC).
+- SchildiChat and Element Classic cannot create users when token-based registration is used. You should create users in Element Web or in the Admin Room.
 
 ## Todo
 - [Matrix RTC/Element Call Setup](https://github.com/matrix-construct/tuwunel/blob/main/docs/matrix_rtc.md)

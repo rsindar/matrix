@@ -9,8 +9,8 @@ fingerprint
 use-auth-secret
 static-auth-secret={{ turn_secret }}
 realm={{ matrix_fqdn }}
-cert=/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ matrix_fqdn }}/{{ matrix_fqdn }}.crt
-pkey=/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ matrix_fqdn }}/{{ matrix_fqdn }}.key
+cert=/etc/coturn/{{ matrix_fqdn }}.crt
+pkey=/etc/coturn/{{ matrix_fqdn }}.key
 no-multicast-peers
 no-cli
 

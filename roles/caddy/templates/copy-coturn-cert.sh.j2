@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DOMAIN="{{ matrix_fqdn }}"
+
+for i in crt key
+do
+        cp /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/$DOMAIN/$DOMAIN.$i /etc/coturn/
+done
+
+chown turnserver:turnserver /etc/coturn/$DOMAIN.*
+chmod 0644 /etc/coturn/$DOMAIN.crt
+chmod 0600 /etc/coturn/$DOMAIN.key
+
+systemctl restart coturn

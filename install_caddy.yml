@@ -9,9 +9,10 @@
         msg: "Please define matrix_fqdn variable"
       when: matrix_fqdn is undefined
 
-    - name: Populate OS family
+    - name: Populate OS facts
       ansible.builtin.setup:
-        gather_subset: os_family
+        gather_subset:
+          - min
 
     - name: Install and configure Caddy
       ansible.builtin.import_role:

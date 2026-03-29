@@ -1,3 +1,7 @@
 ---
+- name: Load variables based on OS family
+  ansible.builtin.include_vars:
+    file: "{{ ansible_os_family }}.yml"
+
 - name: Install Coturn
   ansible.builtin.include_tasks: coturn_{{ ansible_os_family }}.yml

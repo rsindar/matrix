@@ -1,47 +1,32 @@
 ---
-- name: Install Caddy (RHEL/AlmaLinux/Rocky)
-  ansible.builtin.yum:
-    name: caddy
-    state: present
-  when: ansible_os_family == "RedHat"
+- name: Check if Golang is installed
+  ansible.builtin.stat:
+    path: /usr/local/go
+  register: golang_check
 
-- name: Install Caddy (Debian/Ubuntu)
-  when: ansible_os_family == "Debian"
-  block:
-    - name: Install required packages
-      ansible.builtin.apt:
-        name:
-          - debian-keyring
-          - debian-archive-keyring
-          - apt-transport-https
+- name: Install Golang
+  ansible.builtin.unarchive:
+    src: "{{ golang_archive }}"
+    remote_src: true
+    dest: /usr/local/
+  when: not golang_check.stat.exists
 
-    - name: Check if Caddy GPG key is installed
-      ansible.builtin.stat:
-        path: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-      register: caddy_gpg_key
+- name: Install xcaddy
+  ansible.builtin.command: /usr/local/go/bin/go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 
-    - name: Download Caddy GPG key
-      ansible.builtin.get_url:
-        url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
-        dest: /tmp/caddy.gpg.key
-        mode: "0644"
-      when: not caddy_gpg_key.stat.exists
+- name: Build Caddy with caddy-events-exec module
+  ansible.builtin.command: /root/go/bin/xcaddy build --with github.com/mholt/caddy-events-exec --output /usr/local/bin/caddy
+  environment:
+    PATH: "/usr/local/go/bin:{{ ansible_env.PATH }}"
 
-    - name: Convert GPG key to dearmored format
-      ansible.builtin.command: gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg /tmp/caddy.gpg.key
-      when: not caddy_gpg_key.stat.exists
-
-    - name: Download Caddy repository config
-      ansible.builtin.get_url:
-        url: "https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt"
-        dest: /etc/apt/sources.list.d/caddy-stable.list
-        mode: "0644"
-
-    - name: Install Caddy
-      ansible.builtin.apt:
-        name: caddy
-        state: present
-        update_cache: true
+- name: Install Caddy service
+  ansible.builtin.template:
+    src: caddy.service.j2
+    dest: /etc/systemd/system/caddy.service
+    mode: "0644"
+    owner: root
+    group: root
+  notify: Reload systemd
 
 - name: Copy Caddy configuration
   ansible.builtin.template:
@@ -57,3 +42,26 @@
     name: caddy.service
     state: started
     enabled: true
+
+- name: Check if Coturn is installed
+  ansible.builtin.stat:
+    path: /etc/coturn
+  register: coturn_check
+
+- name: Copy coturn helper script
+  ansible.builtin.template:
+    src: copy-coturn-cert.sh.j2
+    dest: /usr/local/bin/copy-coturn-cert.sh
+    mode: "0750"
+    owner: root
+    group: root
+  when: coturn_check.stat.exists
+
+- name: Configure caddy permissions
+  ansible.builtin.template:
+    src: caddy.j2
+    dest: /etc/sudoers.d/caddy
+    mode: "0640"
+    owner: root
+    group: root
+  when: coturn_check.stat.exists

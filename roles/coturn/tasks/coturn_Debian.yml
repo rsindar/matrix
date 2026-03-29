@@ -1,44 +1,46 @@
 ---
 - name: Install required packages
   ansible.builtin.apt:
-    name:
-      - coturn
-      - acl
+    name: coturn
     state: present
     update_cache: true
+
+- name: Create /etc/coturn
+  ansible.builtin.file:
+    path: /etc/coturn
+    mode: 0750
+    owner: "{{ coturn_user }}"
+    group: "{{ coturn_user }}"
+    state: directory
 
 - name: Copy Coturn configuration
   ansible.builtin.template:
     src: turnserver.conf.j2
-    dest: /etc/turnserver.conf
+    dest: /etc/coturn/turnserver.conf
     mode: "0640"
-    owner: turnserver
-    group: turnserver
+    owner: "{{ coturn_user }}"
+    group: "{{ coturn_user }}"
   notify: Restart coturn
+
+- name: Create /etc/systemd/system/coturn.service.d
+  ansible.builtin.file:
+    path: /etc/systemd/system/coturn.service.d
+    mode: 0755
+    owner: root
+    group: root
+    state: directory
+
+- name: Copy /etc/systemd/system/coturn.service.d/override.conf
+  ansible.builtin.template:
+    src: turnserver.conf.j2
+    dest: /etc/coturn/turnserver.conf
+    mode: "0644"
+    owner: root
+    group: root
+  notify: Reload systemd
 
 - name: Start Coturn service
   ansible.builtin.systemd:
     name: coturn.service
     state: started
     enabled: true
-
-- name: Grant read access to /var/lib/caddy/.local and subdirectories
-  ansible.posix.acl:
-    path: /var/lib/caddy/.local
-    default: true
-    recursive: true
-    entity: turnserver
-    etype: user
-    permissions: r-x
-    state: present
-
-- name: Grant read access to Caddy certificate
-  ansible.posix.acl:
-    path: /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/{{ matrix_fqdn }}/{{ matrix_fqdn }}.{{ item }}
-    entity: turnserver
-    etype: user
-    permissions: r--
-    state: present
-  loop:
-    - crt
-    - key
