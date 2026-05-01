@@ -1,7 +1,46 @@
 ---
-- name: Load variables based on OS family
-  ansible.builtin.include_vars:
-    file: "{{ ansible_os_family }}.yml"
+- name: Install required packages
+  ansible.builtin.apt:
+    name: coturn
+    state: present
+    update_cache: true
 
-- name: Install Coturn
-  ansible.builtin.include_tasks: coturn_{{ ansible_os_family }}.yml
+- name: Create /etc/coturn
+  ansible.builtin.file:
+    path: /etc/coturn
+    mode: 0750
+    owner: turnserver
+    group: turnserver
+    state: directory
+
+- name: Copy Coturn configuration
+  ansible.builtin.template:
+    src: turnserver.conf.j2
+    dest: /etc/coturn/turnserver.conf
+    mode: "0640"
+    owner: turnserver
+    group: turnserver
+  notify: Restart coturn
+
+- name: Create /etc/systemd/system/coturn.service.d
+  ansible.builtin.file:
+    path: /etc/systemd/system/coturn.service.d
+    mode: 0755
+    owner: root
+    group: root
+    state: directory
+
+- name: Copy /etc/systemd/system/coturn.service.d/override.conf
+  ansible.builtin.template:
+    src: turnserver.conf.j2
+    dest: /etc/coturn/turnserver.conf
+    mode: "0644"
+    owner: root
+    group: root
+  notify: Reload systemd
+
+- name: Start Coturn service
+  ansible.builtin.systemd:
+    name: coturn.service
+    state: started
+    enabled: true
