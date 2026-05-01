@@ -9,7 +9,7 @@ This repository contains an Ansible playbook for deploying a **Matrix homeserver
 
 ## Requirements
 - Ansible ≥ 2.12
-- A fresh Linux server (1 CPU, 1GB RAM, 10GB SDD, RHEL/AlmaLinux/Rocky/Debian/Ubuntu)
+- A fresh Linux server (1 CPU, 1GB RAM, 10GB SDD, Debian/Ubuntu)
 - SSH access with sudo privileges
 - DNS records pointing to your server
 - The following network ports must be open:
@@ -46,9 +46,9 @@ ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
 - [Element Classic](https://play.google.com/store/search?q=element+classic&c=apps)
 
 ## Limitations
-- Element Calls are not supported (require Matrix RTC).
+- Element Calls are not supported (requires Matrix RTC).
 - SchildiChat and Element Classic cannot create users when token-based registration is used. You should create users in Element Web or in the Admin Room.
 
 ## Todo
 - [Matrix RTC/Element Call Setup](https://github.com/matrix-construct/tuwunel/blob/main/docs/matrix_rtc.md)
-- Migration in to [K0s](https://k0sproject.io/)
+- Installation in to [K0s](https://k0sproject.io/)
