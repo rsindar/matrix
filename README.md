@@ -30,13 +30,11 @@ all:
       ansible_host: 1.2.3.4
       ansible_user: myuser
       matrix_fqdn: my-matrix.tld
-      tuwunel_reg_token: SECRET1
-      turn_secret: SECRET2
+      turn_secret: SECRET
 </pre>
 **NB! Never use not encrypted secrets in the inventory file.**
 <pre>
-ansible-vault encrypt_string 'SECRET1' --name 'tuwunel_reg_token'
-ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
+ansible-vault encrypt_string 'SECRET' --name 'turn_secret'
 </pre>
 **Run:** ansible-playbook site.yml -i inventory.yml --ask-vault-pass
 
@@ -44,6 +42,7 @@ ansible-vault encrypt_string 'SECRET2' --name 'turn_secret'
 - [Element Web](https://app.element.io/#/register)
 - [SchildiChat](https://play.google.com/store/apps/details?id=de.spiritcroc.riotx)
 - [Element Classic](https://play.google.com/store/search?q=element+classic&c=apps)
+- [fluffychat](https://fluffy.chat/)
 
 ## Limitations
 - Element Calls are not supported (requires Matrix RTC).
